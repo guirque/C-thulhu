@@ -4,7 +4,7 @@ def invoke(prompt):
     """
         Invokes the llm and returns its content.
     """
-    return model.model.invoke(prompt)
+    return model.invoke_llm(prompt)
 
 def api_key_exists():
     return model.google_api_key is not None
