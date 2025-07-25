@@ -1,14 +1,13 @@
 import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
-from dotenv import load_dotenv
 import os
-
-# Carrega as variáveis do .env
-load_dotenv()
 
 st.title("🦜🔗 Quickstart App")
 
-google_api_key = st.sidebar.text_input("Google API Key", type="password", value=os.getenv("GOOGLE_API_KEY", ""))
+# Getting Gemini API Key
+google_api_key = os.environ.get("GEMINI_API_KEY") 
+if google_api_key is None:
+    google_api_key = st.sidebar.text_input("Google API Key", type="password", value=os.getenv("GOOGLE_API_KEY", ""))
 
 
 def generate_response(input_text):
