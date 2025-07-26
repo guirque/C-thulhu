@@ -98,4 +98,28 @@ def read_file(filepath: str):
             "Error": "Could not locate or open file."
         }
 
-tookit = [list_folder_content, move_file, write_to_file, read_file]
+@tool
+def make_item(filepath: str, type: str, content=None):
+    """
+        Use this function to create a file or folder inside ``current_folder``. ``filepath`` must include the file or folder name.
+        ``type`` must be either "file" or "folder". ``content`` is optional and can be used to insert content into the created file.
+        Returns the True on success and an object with an error message, otherwise.
+    """
+
+    try:
+        path = os.path.join(folder_data.current_folder, filepath)
+
+        if type == "folder":
+            os.mkdir(path)
+            print(path)
+        else:
+            with open(path, "w") as file:
+                if content is not None:
+                    file.write(content)
+    except:
+        return {
+            "Error": "Could not create or open file or folder. This could happen if a path is invalid or due to permission errors."
+        }
+
+
+tookit = [list_folder_content, move_file, write_to_file, read_file, make_item]
