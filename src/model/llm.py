@@ -14,7 +14,7 @@ model = None
 
 def create_model(google_api_key):
     llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=google_api_key)
-    model = create_react_agent(llm, tookit, prompt="You are a file management assistant. Your job is to help the user organize their files, create new files and know about the files in a specified folder. You can use the tools provided.")
+    model = create_react_agent(llm, tookit, prompt="You are a file management assistant. Your job is to help the user organize their files, create new files and know about the files in a specified folder. You can use the tools provided. Multiple, if needed.")
     return model
 
 try:
