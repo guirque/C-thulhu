@@ -1,42 +1,68 @@
-# Agentic AI App Hackathon Template
+# File Management / Folder Organizer Assistant
 
-Welcome! This repository is your starting point for the **Agentic AI App Hackathon**. It includes:
+![Screenshot of Chat with AI Agent](images/Screenshot.jpeg)
 
-- A consistent folder structure  
-- An environment spec (`environment.yml` or `Dockerfile`)  
-- Documentation placeholders to explain your design and demo
+The implemented AI agent is meant to help with tasks involving creating / generating, locating, analyzing and reorganizing folders and files.
 
-## 📋 Submission Checklist
+## 🛠️ Setup Instructions
 
-- [ ] All code in `src/` runs without errors  
-- [ ] `ARCHITECTURE.md` contains a clear diagram sketch and explanation  
-- [ ] `EXPLANATION.md` covers planning, tool use, memory, and limitations  
-- [ ] `DEMO.md` links to a 3–5 min video with timestamped highlights  
+1. Clone the repository to a folder of your choice.
+```
+git clone https://github.com/guirque/C-thulhu.git <folder>
+```
 
+2. Create a .env file with your Gemini API key in the project folder:
+Inside the .env file:
+```
+GEMINI_API_KEY=<your_key>
+```
 
-## 🚀 Getting Started
+3. In the chosen folder, create a python virtual environment.
+```
+python -m venv venv
+```
 
-1. **Clone / Fork** this template.  Very Important. Fork Name MUST be the same name as the teamn name
+4. Initiate the environment.  
+  
+  Windows:
+  ```
+  .\venv\Scripts\activate
+  ```
+  Linux:
+  ```
+  source venv/bin/activate
+  ```
 
+5. Install pip dependencies
+```
+pip install -r requirements.txt
+```
 
-## 📂 Folder Layout
+6. If not present, install Tkinter
 
-![Folder Layout Diagram](images/folder-githb.png)
+  Ubuntu example:
+  ```
+    sudo apt install python3-tk
+  ```
 
+  You're all set! Just run the app whenever desired.
 
+## 💼 Dependencies
 
-## 🏅 Judging Criteria
+The project pip dependencies are listed in the requirements.txt file. They include:
+- LangChain
+- Streamlit
+- Dotenv
+- EasyGUI
 
-- **Technical Excellence **  
-  This criterion evaluates the robustness, functionality, and overall quality of the technical implementation. Judges will assess the code's efficiency, the absence of critical bugs, and the successful execution of the project's core features.
+There is also Tkinter, installed separately.
 
-- **Solution Architecture & Documentation **  
-  This focuses on the clarity, maintainability, and thoughtful design of the project's architecture. This includes assessing the organization and readability of the codebase, as well as the comprehensiveness and conciseness of documentation (e.g., GitHub README, inline comments) that enables others to understand and potentially reproduce or extend the solution.
+## 🏃 Run the Agent!
 
-- **Innovative Gemini Integration **  
-  This criterion specifically assesses how effectively and creatively the Google Gemini API has been incorporated into the solution. Judges will look for novel applications, efficient use of Gemini's capabilities, and the impact it has on the project's functionality or user experience. You are welcome to use additional Google products.
+While in the environment and on the project folder, run:
+```
+streamlit run src/view/index.py
+```
 
-- **Societal Impact & Novelty **  
-  This evaluates the project's potential to address a meaningful problem, contribute positively to society, or offer a genuinely innovative and unique solution. Judges will consider the originality of the idea, its potential real‑world applicability, and its ability to solve a challenge in a new or impactful way.
-
-
+This will instantly open the web app in a browser.  
+You may then chat with it accordingly.
