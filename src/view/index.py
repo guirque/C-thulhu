@@ -3,33 +3,34 @@ sys.path.append("src/")
 
 import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
-import os
 from controller.llm_controller import invoke, api_key_exists, update_api_key
+import os
 
-from controller.file_controller import FileController
-def initialize_session_state():
-    """Initialize the session state of Streamlit"""    
-    if 'uploaded_files' not in st.session_state:
-        st.session_state.uploaded_files = []
-    if 'file_controller' not in st.session_state:
-        st.session_state.file_controller = FileController()
+st.title("🦜🔗 Folder organizer AI")
 
-initialize_session_state()
+value = st.sidebar.text_input("Google API Key", type="password", value=os.getenv("GEMINI_API_KEY", ""))
+update_api_key(value)
 
-st.title("🦜🔗 Quickstart App")
+import easygui
 
-# Getting Gemini API Key
-#if not api_key_exists():
-#    value = st.sidebar.text_input("Google API Key", type="password", value=os.getenv("GEMINI_API_KEY", ""))
-#    update_api_key(value)
+folder_path = None
 
-with st.form("my_form"):
+with st.form("working_dir"):
+    submitted = st.form_submit_button("Choose AI Working Directory")
+    if submitted:
+        folder_path = easygui.diropenbox("Select a folder")
+
+with st.form("submit"):
     text = st.text_area(
-        "Enter text:",
-        "What are the three key pieces of advice for learning how to code?",
+        "Type the criteria that you want for reorganizing your files:",
+        "Documents that look have similar subjects",
     )
-    submitted = st.form_submit_button("Submit")
+
+    submitted = st.form_submit_button("Run")
     if not api_key_exists():
         st.warning("Please enter your Google API key!", icon="⚠")
     if submitted and api_key_exists():
-        st.info(invoke(text))
+        if not folder_path:
+            st.error("Folder not selected")
+        else:
+            st.info(invoke(text))
