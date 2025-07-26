@@ -33,7 +33,7 @@ Tool ideas
 - open_file(filename)
 - write_file(filename, content, erase_content=False)
 - list_folder_content(folder_name)
-- move_file
+- move_file(filename, destination)
 """
 
 @tool
@@ -45,4 +45,24 @@ def list_folder_content(folderpath: str):
 
     return glob(os.path.join(folder_data.current_folder, folderpath, "**")) if folderpath != "." else get_content(folder_data.current_folder)
 
-tookit = [list_folder_content]
+
+@tool
+def move_file(filepath: str, destination: str):
+    """
+        Use this function to move or rename a file inside ``current_folder``. "filepath" is the path including the file name starting from ``current_folder``.
+        "destination" is the path including the new file name, starting from ``current_folder``.
+        Returns True on success and an object with an error message, otherwise.
+    """
+
+    try:
+        
+        old_path = os.path.join(folder_data.current_folder, filepath)
+        new_path = os.path.join(folder_data.current_folder, destination)
+        os.rename(old_path, new_path)
+
+    except:
+        return {
+            "Error": "Could not locate or open file."
+        }
+
+tookit = [list_folder_content, move_file]
