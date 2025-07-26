@@ -1,9 +1,0 @@
-services:
-  data-api:
-    build: .
-    ports: 
-      - 3000:8501
-    env_file:
-      - .env
-    volumes:
-      - ./src/:/src/
