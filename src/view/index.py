@@ -7,12 +7,15 @@ from controller.llm_controller import invoke, api_key_exists, update_api_key
 import os
 import easygui
 
+MAX_MESSAGES = 15
+
 st.set_page_config(page_title="Folder Organizer AI", page_icon="📄")
 
 st.title("📄💾 Folder Organizer AI")
 
 value = st.sidebar.text_input("Google API Key", type="password", value=os.getenv("GEMINI_API_KEY", ""))
-update_api_key(value)
+if value != os.getenv("GEMINI_API_KEY", ""):
+    update_api_key(value)
 
 def initialize_session_state():
     """Initialize the session state of Streamlit"""    
@@ -41,6 +44,9 @@ if prompt := st.chat_input():
         msg = response['messages'][-1].content
         st.session_state.messages.append({"role": "assistant", "content": msg})
         st.chat_message("assistant").write(msg)
+
+    if len(st.session_state.messages) > MAX_MESSAGES:
+        st.session_state.messages = st.session_state.messages[-MAX_MESSAGES:]
 
 with st.container():
     st.markdown("### Working Directory")
