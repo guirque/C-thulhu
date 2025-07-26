@@ -47,6 +47,7 @@ User: "List the files in the current folder"
 - **move_file(filepath, destination)**: File movement and renaming using os.rename
 - **write_to_file(filename, content)**: File creation/overwrite with content
 - **read_file(filepath)**: File content reading
+- **make_item(filepath, type)**: File and folder creation.
 
 ## 3. Tool Integration
 
@@ -89,7 +90,7 @@ User: "List the files in the current folder"
 - Folder existence verification before operations
 - Visual success/error feedback for each action
 - Complete message history preserved in session
-- Complete context passed to LLM (all previous messages)
+- Context passed on to LLM (previous messages)
 
 ## 5. Known Limitations
 
@@ -97,18 +98,17 @@ User: "List the files in the current folder"
 - **API Key Dependency**: Requires valid Google Gemini key to function
 - **File System Access**: Limited to user permissions on system
 - **Memory**: State maintained only in current session (not persistent between sessions)
-- **Concurrent Operations**: Does not support simultaneous operations
-- **Single Folder**: Works with only one folder at a time
+- **Concurrent Operations**: Does not always support simultaneous operations, which might require more tools to be called.
+- **Single Folder**: Works with only one folder at a time, chosen by the user.
 
 ### **Performance Limitations**:
 - **Large Directories**: May be slow with very large folders
 - **API Rate Limits**: Subject to Google Gemini API limits
 - **File Operations**: File operations are synchronous
-- **Memory Usage**: Complete message history maintained in memory
 
 ### **Edge Cases**:
 - **Special Characters**: Files with special characters may cause problems
-- **Permission Errors**: Silent failure in operations without permission
+- **Permission Errors**: Failure in operations without access/edit permission
 - **Network Issues**: Failure in case of API connectivity problems
 - **Empty Folders**: Undefined behavior with empty folders
 - **Large Files**: Reading very large files may be problematic
@@ -117,14 +117,11 @@ User: "List the files in the current folder"
 - **No Undo**: File operations cannot be undone
 - **Limited Preview**: Does not show preview before moving files
 - **No Batch Operations**: Operations limited to one file at a time
-- **No File Upload**: Does not support file upload via interface
 - **No Search**: No file search functionality
 
 ### **Functionality Limitations**:
-- **No File Classification**: Does not automatically classify files by type
-- **No Folder Organization**: Does not automatically organize folder structure
-- **No File Analysis**: Does not analyze file content
-- **No Backup**: Does not create backups before operations
+- **Limited File Types**: May not be able to read or modify file content if formatted oddly or if it's binary.
+- **No Backup**: Does not create backups before operations.
 
 ### **Future Improvements**:
 - Implement backup system before operations
@@ -132,8 +129,6 @@ User: "List the files in the current folder"
 - Support batch operations
 - Implement undo/redo system
 - Add configuration persistence
-- Implement automatic file classification
-- Add search functionality
 - Support multiple folders simultaneously
-- Implement file content analysis
+- Implement more thorough file content analysis
 
