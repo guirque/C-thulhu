@@ -29,8 +29,7 @@ folder_data = FolderData()
 
 """
 Tool ideas
-- set_current_folder(folderpath)
-- open_file(filename)
+- read_file(filename)
 - write_file(filename, content, erase_content=False)
 - list_folder_content(folder_name)
 - move_file(filename, destination)
@@ -80,4 +79,23 @@ def write_to_file(filename: str, content: str):
     return f"file {filename} written to {folder_data.current_folder}"
 
 
-tookit = [list_folder_content, move_file, write_to_file]
+@tool
+def read_file(filepath: str):
+    """
+        Use this function to read the content of a file inside ``current_folder``.
+        Returns the a content on success and an object with an error message, otherwise.
+    """
+    try:   
+
+        path = os.path.join(folder_data.current_folder, filepath)
+        content = None
+        with open(path, "r") as file:
+            content = file.read()
+        return content
+
+    except:
+        return {
+            "Error": "Could not locate or open file."
+        }
+
+tookit = [list_folder_content, move_file, write_to_file, read_file]
