@@ -31,4 +31,4 @@ with st.form("submit"):
         if not st.session_state['folder_path']:
             st.error("Folder not selected")
         else:
-            st.info(invoke(text, st.session_state['folder_path']))
+            st.info(invoke(text, st.session_state['folder_path'])['messages'][-1].content)
