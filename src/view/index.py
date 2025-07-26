@@ -7,7 +7,9 @@ from controller.llm_controller import invoke, api_key_exists, update_api_key
 import os
 import easygui
 
-st.title("🦜🔗 Folder organizer AI")
+st.set_page_config(page_title="Folder Organizer AI", page_icon="📄")
+
+st.title("📄💾 Folder Organizer AI")
 
 value = st.sidebar.text_input("Google API Key", type="password", value=os.getenv("GEMINI_API_KEY", ""))
 update_api_key(value)
@@ -46,4 +48,5 @@ with st.container():
         folder = easygui.diropenbox("Select a folder")
         if folder:
             st.session_state.folder_path = folder
-            st.success(f"Selected folder: {folder}")
+            st.session_state.messages.append({"role": "system", "content": f"Selected folder: {folder}"})
+            st.chat_message("system").write(f"Selected folder: {folder}")
