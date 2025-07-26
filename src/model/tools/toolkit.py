@@ -4,8 +4,8 @@ import os
 
 # Utils --------------------------------------------------------------------------------------------------------
 
-def get_content(path):
-    return glob(os.path.join(path, "*"))
+def get_content(path, recursive=False):
+    return glob(os.path.join(path, "**"), recursive=recursive)
 
 # Folder Data --------------------------------------------------------------------------------------------------
 
@@ -36,13 +36,14 @@ Tool ideas
 """
 
 @tool
-def list_folder_content(folderpath: str):
+def list_folder_content(folderpath: str, recursive=False):
     """
         Use this function to list content of a specific folder, inside ``current_folder``. Use "." for the content inside the ``current_folder``.
+        Use ``recursive=True`` if you need to see content inside of folders.
         Returns an array of file and folder names, found inside "folderpath".
     """
 
-    return glob(os.path.join(folder_data.current_folder, folderpath, "**")) if folderpath != "." else get_content(folder_data.current_folder)
+    return glob(os.path.join(folder_data.current_folder, folderpath, "**"), recursive=recursive) if folderpath != "." else get_content(folder_data.current_folder, recursive=recursive)
 
 
 @tool
@@ -64,7 +65,6 @@ def move_file(filepath: str, destination: str):
             "Error": "Could not locate or open file."
         }
 
-
 @tool
 def write_to_file(filename: str, content: str):
     """
@@ -77,7 +77,6 @@ def write_to_file(filename: str, content: str):
         f.write(content)
         f.flush()
     return f"file {filename} written to {folder_data.current_folder}"
-
 
 @tool
 def read_file(filepath: str):
@@ -103,7 +102,7 @@ def make_item(filepath: str, type: str, content=None):
     """
         Use this function to create a file or folder inside ``current_folder``. ``filepath`` must include the file or folder name.
         ``type`` must be either "file" or "folder". ``content`` is optional and can be used to insert content into the created file.
-        Returns the True on success and an object with an error message, otherwise.
+        Returns True on success and an object with an error message, otherwise.
     """
 
     try:
@@ -111,7 +110,6 @@ def make_item(filepath: str, type: str, content=None):
 
         if type == "folder":
             os.mkdir(path)
-            print(path)
         else:
             with open(path, "w") as file:
                 if content is not None:
