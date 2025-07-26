@@ -74,7 +74,7 @@
 │  │  │content()        │  │                 │  │                         │  │ │
 │  │  └─────────────────┘  └─────────────────┘  └─────────────────────────┘  │ │
 │  │  ┌─────────────────────────────────────────────────────────────────────┐ │ │
-│  │  │                        read_file()                                  │ │ │
+│  │  │                             etc.                                    │ │ │
 │  │  └─────────────────────────────────────────────────────────────────────┘ │ │
 │  └─────────────────────────────────────────────────────────────────────────┘ │
 │  ┌─────────────────────────────────────────────────────────────────────────┐ │
@@ -109,28 +109,31 @@
 ## Component Description
 
 ### 1. **User Interface**  
-- **Streamlit Web App**: Interface web interativa com chat, seletor de pastas e input de API key
-- **easygui**: Diálogo nativo para seleção de pastas
-- **Chat Interface**: Interface de conversação em tempo real com histórico persistente
-- **Session State**: Gerenciamento de estado da sessão (folder_path, messages, API key)
+- **Streamlit Web App**: Interactive web interface with chat UI, folder selector and API key input.
+- **easygui**: Native dialog for folder selection.
+- **Chat Interface**: Real-time chat with in-session history.
+- **Session State**: Session state management (folder_path, messages, API key)
 
 ### 2. **Agent Core**  
-- **Planner**: LangGraph ReAct Agent que quebra tarefas em passos lógicos
-- **Executor**: Combina LLM (Gemini 2.5 Flash) com chamadas de ferramentas
-- **Memory**: Gerenciamento de estado da sessão e histórico de mensagens
+- **Planner**: LangGraph ReAct Agent that breaks tasks into logical steps.
+- **Executor**: Combination of the LLM Combina LLM (Gemini 2.5 Flash) with tool calling.
+- **Memory**: Session state management and chat history.
 
 ### 3. **Tools / APIs**  
-- **Google Gemini API**: LLM principal via langchain_google_genai
-- **File Management Tools**: 
-  - `list_folder_content()`: Lista conteúdo de pastas usando glob
-  - `move_file()`: Move/renomeia arquivos usando os.rename
-  - `write_to_file()`: Cria/sobrescreve arquivos com conteúdo
-  - `read_file()`: Lê conteúdo de arquivos
+- **Google Gemini API**: LLM used via langchain_google_genai
+- **File Management Tools (implemented functions)**: 
+  - `list_folder_content(folderpath)`: Folder content listing using glob
+  - `move_file(filepath, destination)`: File movement and renaming using os.rename
+  - `write_to_file(filename, content)`: File creation/overwrite with content
+  - `read_file(filepath)`: File content reading
+  - `make_item(filepath, type)`: File and folder creation.
+- **FolderData**: Current folder state management.
+
 
 ### 4. **Observability**  
 - **Session State**: Rastreamento de estado da sessão Streamlit
-- **Error Handling**: Validação de API key, verificação de pastas, tratamento de erros de operações de arquivo
-- **Logging**: Mensagens de chat e respostas do agente preservadas na sessão
+- **Error Handling**: Folder verification and basic error handling.
+- **Logging**: Many activities, like tool calling, are logged during runtime and visible on the console. Chat messages are visible during session on the UI.
 
 ## Key Implementation Details
 
@@ -147,8 +150,7 @@
 - **API Key**: Dynamic key management for Gemini API
 
 ### **Error Handling**:
-- API key validation before each operation
+- API key validation
 - Folder existence verification
-- File operation error catching and reporting
-- Graceful degradation for missing dependencies
+- File operation error catching and reporting (error message to LLM)
 
