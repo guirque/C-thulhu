@@ -80,9 +80,7 @@ def write_to_file(filename: str, content: str):
 
     LOGGER.info(f"model called tool write_to_file({filename}, {content})")
 
-    print(folder_data.current_folder)
     filepath = os.path.join(folder_data.current_folder, filename)
-    print(filepath)
     with open(filepath, "w") as f:
         f.write(content)
         f.flush()
