@@ -28,5 +28,5 @@ def update_api_key(value):
 
 # LLM Calling -------------------------------------------------------------------------------------
 
-def invoke_llm(prompt):
-    return model.invoke({"messages": HumanMessage(prompt)})
+def invoke_llm(messages):
+    return model.invoke({"messages": messages})

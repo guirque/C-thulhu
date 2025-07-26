@@ -35,7 +35,7 @@ if prompt := st.chat_input():
     if not st.session_state.folder_path:
         st.error("Folder not selected")
     else:
-        response = invoke(prompt, st.session_state['folder_path'])
+        response = invoke(st.session_state.messages, st.session_state['folder_path'])
         msg = response['messages'][-1].content
         st.session_state.messages.append({"role": "assistant", "content": msg})
         st.chat_message("assistant").write(msg)
