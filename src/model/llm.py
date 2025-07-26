@@ -3,7 +3,9 @@ import os
 from langgraph.prebuilt import create_react_agent
 from model.tools.toolkit import tookit
 from langchain_core.messages import HumanMessage
+from dotenv import load_dotenv
 
+load_dotenv()
 google_api_key = os.environ.get("GEMINI_API_KEY") 
 
 model = None
