@@ -65,4 +65,19 @@ def move_file(filepath: str, destination: str):
             "Error": "Could not locate or open file."
         }
 
-tookit = [list_folder_content, move_file]
+
+@tool
+def write_to_file(filename: str, content: str):
+    """
+        Writes ``content`` to a file with name ``filename`` inside ``current_folder``, returns if successful. Writes over ``filename`` if it already exists inside ``current_folder``.
+    """
+    print(folder_data.current_folder)
+    filepath = os.path.join(folder_data.current_folder, filename)
+    print(filepath)
+    with open(filepath, "w") as f:
+        f.write(content)
+        f.flush()
+    return f"file {filename} written to {folder_data.current_folder}"
+
+
+tookit = [list_folder_content, move_file, write_to_file]
