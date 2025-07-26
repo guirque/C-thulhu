@@ -6,9 +6,11 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from controller.llm_controller import invoke, api_key_exists, update_api_key
 import os
 import easygui
+from streamlit.logger import get_logger
 
 MAX_MESSAGES = 15
 
+LOGGER = get_logger(__name__)
 st.set_page_config(page_title="Folder Organizer AI", page_icon="📄")
 
 st.title("📄💾 Folder Organizer AI")
@@ -34,6 +36,8 @@ if prompt := st.chat_input():
         st.info("Please add your Google Gemini key to continue.")
         st.stop()
 
+    LOGGER.info(f"user prompt: {prompt}")
+
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
 
@@ -56,3 +60,4 @@ with st.container():
             st.session_state.folder_path = folder
             st.session_state.messages.append({"role": "system", "content": f"Selected folder: {folder}"})
             st.chat_message("system").write(f"Selected folder: {folder}")
+            LOGGER.info(f"set selected folder to {folder}")

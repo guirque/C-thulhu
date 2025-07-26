@@ -1,6 +1,9 @@
 from langchain_core.tools import tool
 from glob import glob
+from streamlit.logger import get_logger
 import os
+
+LOGGER = get_logger(__name__)
 
 # Utils --------------------------------------------------------------------------------------------------------
 
@@ -43,6 +46,8 @@ def list_folder_content(folderpath: str, recursive=False):
         Returns an array of file and folder names, found inside "folderpath".
     """
 
+    LOGGER.info(f"model called tool list_folder_content({folderpath}, {recursive})")
+
     return glob(os.path.join(folder_data.current_folder, folderpath, "**"), recursive=recursive) if folderpath != "." else get_content(folder_data.current_folder, recursive=recursive)
 
 
@@ -53,6 +58,8 @@ def move_file(filepath: str, destination: str):
         "destination" is the path including the new file name, starting from ``current_folder``.
         Returns True on success and an object with an error message, otherwise.
     """
+
+    LOGGER.info(f"model called tool move_file({filepath}, {destination})")
 
     try:
         
@@ -70,6 +77,9 @@ def write_to_file(filename: str, content: str):
     """
         Writes ``content`` to a file with name ``filename`` inside ``current_folder``, returns if successful. Writes over ``filename`` if it already exists inside ``current_folder``.
     """
+
+    LOGGER.info(f"model called tool write_to_file({filename}, {content})")
+
     print(folder_data.current_folder)
     filepath = os.path.join(folder_data.current_folder, filename)
     print(filepath)
@@ -84,6 +94,9 @@ def read_file(filepath: str):
         Use this function to read the content of a file inside ``current_folder``.
         Returns the a content on success and an object with an error message, otherwise.
     """
+
+    LOGGER.info(f"model called tool read_file({filepath})")
+
     try:   
 
         path = os.path.join(folder_data.current_folder, filepath)
@@ -104,6 +117,8 @@ def make_item(filepath: str, type: str, content=None):
         ``type`` must be either "file" or "folder". ``content`` is optional and can be used to insert content into the created file.
         Returns True on success and an object with an error message, otherwise.
     """
+
+    LOGGER.info(f"model called tool make_item({filepath}, {type}, {content})")
 
     try:
         path = os.path.join(folder_data.current_folder, filepath)
